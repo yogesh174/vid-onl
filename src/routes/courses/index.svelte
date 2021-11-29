@@ -44,7 +44,7 @@
 </script>
 
 <svelte:head>
-	<title>Home</title>
+	<title>Courses</title>
 </svelte:head>
 
 <div class="container my-12 mx-auto px-4 md:px-12">

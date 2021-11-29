@@ -64,6 +64,10 @@
 	};
 </script>
 
+<svelte:head>
+	<title>Content</title>
+</svelte:head>
+
 <div class="flex flex-col p-10 h-full">
 	<div class="flex justify-between">
 		<h1>{course.title}</h1>
