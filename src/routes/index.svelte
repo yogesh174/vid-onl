@@ -33,8 +33,8 @@
 			
 			<p>Checkout other products similar to this</p>
 			<ul class="mx-5">
-				<li><a href="http://" class="text-purple-300">Hostel management</a></li>
-				<li><a href="http://" class="text-purple-300">Online tutorials</a></li>
+				<li><a href="https://htl-mgmt.vercel.app/login" class="text-purple-300">Hostel management</a></li>
+				<li><a href="https://vid-onl.vercel.app/login" class="text-purple-300">Online tutorials</a></li>
 			</ul>
 		</div>
 	</div>

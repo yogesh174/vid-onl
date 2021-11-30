@@ -41,21 +41,53 @@
 		</Header>
 	{/if}
 
-	<SideBar>
-		<div class="drawer-content">
-			<!-- flex flex-col items-center justify-center  -->
-			<!-- <label for="my-drawer-2" class="mb-4 btn btn-primary drawer-button lg:hidden">open menu</label
-			> -->
-
-			{#if $navigating || isLoading}
-				<div class="h-full w-full flex justify-center">
-					<div class="m-auto">
-						<RingLoader size="5" color="#86d2f9" unit="em" duration="2s" />
+	{#if user && user.role.name === 'Admin'}
+		<SideBar>
+			<div class="drawer-content">
+				{#if $navigating || isLoading}
+					<div class="h-full w-full flex justify-center">
+						<div class="m-auto">
+							<RingLoader size="5" color="#86d2f9" unit="em" duration="2s" />
+						</div>
 					</div>
-				</div>
-			{:else}
-				<slot />
-			{/if}
-		</div>
-	</SideBar>
+				{:else}
+					<slot />
+				{/if}
+			</div>
+			<div slot="menu">
+				<li>
+					<a href="/">Home</a>
+				</li>
+				<li>
+					<a href="/courses">Courses</a>
+				</li>
+				<li>
+					<a href="/users">Users</a>
+				</li>
+			</div>
+		</SideBar>
+	{:else if user}
+		<SideBar>
+			<div class="drawer-content">
+				{#if $navigating || isLoading}
+					<div class="h-full w-full flex justify-center">
+						<div class="m-auto">
+							<RingLoader size="5" color="#86d2f9" unit="em" duration="2s" />
+						</div>
+					</div>
+				{:else}
+					<slot />
+				{/if}
+			</div>
+
+			<div slot="menu">
+				<li>
+					<a href="/">Home</a>
+				</li>
+				<li>
+					<a href="/courses">Courses</a>
+				</li>
+			</div>
+		</SideBar>
+	{/if}
 </main>

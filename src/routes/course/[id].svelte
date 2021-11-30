@@ -45,9 +45,9 @@
 	const updatePreview = () => (markdown = marked(course.content));
 	updatePreview();
 
-	const changeMode = () => {
+	const changeMode = async () => {
 		isLoading = true;
-		updatePreview();
+		await updatePreview();
 		edit = !edit;
 		isLoading = false;
 	};

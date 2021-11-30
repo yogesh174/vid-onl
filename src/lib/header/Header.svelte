@@ -6,8 +6,8 @@
 <header>
 	<div class="navbar mb-1 shadow-lg bg-neutral text-neutral-content">
 		<div class="flex-none hidden lg:flex">
-			<button class="btn btn-square btn-ghost">
-				<label for="my-drawer-2">
+			<label for="my-drawer-2">
+				<button class="btn btn-square btn-ghost">
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
 						fill="none"
@@ -21,13 +21,13 @@
 							d="M4 6h16M4 12h16M4 18h16"
 						/>
 					</svg>
-				</label>
-			</button>
+				</button>
+			</label>
 		</div>
 		<div class="flex-1 hidden px-2 mx-2 lg:flex">
 			<span class="text-lg font-bold"> VidOnl </span>
 		</div>
-		
+
 		<div class="flex-none">
 			<button class="btn btn-square btn-ghost">
 				<svg
@@ -46,14 +46,11 @@
 			</button>
 		</div>
 		<div class="flex-none">
-			<slot name="avatar">
-				Hello there!
-			</slot>
+			<slot name="avatar">Hello there!</slot>
 		</div>
 
 		<div class="flex-none">
-			<slot name="logout"></slot>
+			<slot name="logout" />
 		</div>
-		
 	</div>
 </header>

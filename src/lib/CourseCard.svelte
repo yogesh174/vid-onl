@@ -11,9 +11,9 @@
 		</div>
 		<p>{description}</p>
 		<div class="card-actions">
-			<button class="btn-primary btn-sm">
-				<a href="/course/{courseId}"> Go to course </a>
-			</button>
+			<a href="/course/{courseId}">
+				<button class="btn-primary btn-sm"> Go to course </button>
+			</a>
 		</div>
 	</div>
 </div>
