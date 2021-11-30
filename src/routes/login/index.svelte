@@ -12,16 +12,25 @@
 
 <script>
 	import { post } from '$lib/utils.js';
+	import { navigating, session } from '$app/stores';
+	import { RingLoader } from 'svelte-loading-spinners';
+	import { goto } from '$app/navigation';
 
 	let identifier = '';
 	let password = '';
 	let errors = null;
+	let isLoading = false;
 
 	async function submit() {
-		const response = await post(`auth/login`, { identifier, password });
+		isLoading = true;
+		const response = await post(`/auth/login`, { identifier, password });
 		errors = response.error;
 
-		if (response.user) location.reload();
+		if (response.user) {
+			location.reload();
+			goto('/');
+		}
+		isLoading = false;
 	}
 </script>
 
@@ -29,59 +38,67 @@
 	<title>Log in</title>
 </svelte:head>
 
-<div class="hero min-h-screen bg-base-200">
-	<div class="flex-col hero-content lg:flex-row space-x-64">
-		<div class="text-center lg:text-left">
-			<h1 class="mb-5 text-5xl font-bold">VidOnl</h1>
-			<p class="mb-5">
-				VidOnl is a complete online classes system with tutoring scripts that can be completely
-				customized in markdown. Professors can create tutoring scripts in markdown and upload them
-				and students can learn from them.
-			</p>
-			<p class="mb-10">Note: To register please contact the admin of your school.</p>
+{#if $navigating || isLoading}
+	<div class="h-full w-full flex justify-center">
+		<div class="m-auto">
+			<RingLoader size="5" color="#86d2f9" unit="em" duration="2s" />
 		</div>
+	</div>
+{:else}
+	<div class="hero min-h-screen bg-base-200">
+		<div class="flex-col hero-content lg:flex-row space-x-64">
+			<div class="text-center lg:text-left">
+				<h1 class="mb-5 text-5xl font-bold">VidOnl</h1>
+				<p class="mb-5">
+					VidOnl is a complete online classes system with tutoring scripts that can be completely
+					customized in markdown. Professors can create tutoring scripts in markdown and upload them
+					and students can learn from them.
+				</p>
+				<p class="mb-10">Note: To register please contact the admin of your school.</p>
+			</div>
 
-		<div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
-			<div class="card-body">
-				{#if errors}
-					<pre class="text-sm text-red-300 font-medium">
+			<div class="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+				<div class="card-body">
+					{#if errors}
+						<pre class="text-sm text-red-300 font-medium">
 						Invalid username or password
 					</pre>
-				{/if}
+					{/if}
 
-				<form on:submit|preventDefault={submit}>
-					<div class="form-control">
-						<label class="label">
-							<span class="label-text">Username</span>
-						</label>
-						<input
-							type="text"
-							required
-							placeholder="Username"
-							bind:value={identifier}
-							class="input input-bordered"
-						/>
-					</div>
-					<div class="form-control">
-						<label class="label">
-							<span class="label-text">Password</span>
-						</label>
-						<input
-							type="password"
-							required
-							placeholder="Password"
-							bind:value={password}
-							class="input input-bordered"
-						/>
-						<label class="label">
-							<a href="#" class="label-text-alt">Forgot password?</a>
-						</label>
-					</div>
-					<div class="form-control mt-6">
-						<input type="submit" value="Login" class="btn btn-primary" />
-					</div>
-				</form>
+					<form on:submit|preventDefault={submit}>
+						<div class="form-control">
+							<label class="label">
+								<span class="label-text">Username</span>
+							</label>
+							<input
+								type="text"
+								required
+								placeholder="Username"
+								bind:value={identifier}
+								class="input input-bordered"
+							/>
+						</div>
+						<div class="form-control">
+							<label class="label">
+								<span class="label-text">Password</span>
+							</label>
+							<input
+								type="password"
+								required
+								placeholder="Password"
+								bind:value={password}
+								class="input input-bordered"
+							/>
+							<label class="label">
+								<a href="#" class="label-text-alt">Forgot password?</a>
+							</label>
+						</div>
+						<div class="form-control mt-6">
+							<input type="submit" value="Login" class="btn btn-primary" />
+						</div>
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
+{/if}

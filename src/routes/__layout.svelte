@@ -4,10 +4,17 @@
 	import '../app.css';
 	import { session } from '$app/stores';
 	import { post } from '$lib/utils.js';
-	
+	import { navigating } from '$app/stores';
+	import { RingLoader } from 'svelte-loading-spinners';
+	import { goto } from '$app/navigation';
+	let isLoading = false;
+
 	async function logout() {
+		isLoading = true;
 		await post(`/auth/logout`);
+		goto('/login');
 		location.reload();
+		isLoading = false;
 	}
 
 	let user = $session.user;
@@ -21,30 +28,34 @@
 					{user.firstName[0] + user.lastName[0]}
 				</div>
 			</div>
-			
+
 			<form on:submit|preventDefault={logout} slot="logout">
-				<button type="submit" class="btn btn-primary mx-3">
-					Logout
-				</button>
+				<button type="submit" class="btn btn-primary mx-3"> Logout </button>
 			</form>
 		</Header>
-	
 	{:else}
 		<Header>
 			<form on:submit|preventDefault={logout} slot="logout">
-				<button type="submit" class="btn btn-primary mx-3">
-					Logout
-				</button>
+				<button type="submit" class="btn btn-primary mx-3"> Logout </button>
 			</form>
 		</Header>
 	{/if}
-	
+
 	<SideBar>
-		<div class="drawer-content"> <!-- flex flex-col items-center justify-center  -->
+		<div class="drawer-content">
+			<!-- flex flex-col items-center justify-center  -->
 			<!-- <label for="my-drawer-2" class="mb-4 btn btn-primary drawer-button lg:hidden">open menu</label
 			> -->
 
-			<slot />
+			{#if $navigating || isLoading}
+				<div class="h-full w-full flex justify-center">
+					<div class="m-auto">
+						<RingLoader size="5" color="#86d2f9" unit="em" duration="2s" />
+					</div>
+				</div>
+			{:else}
+				<slot />
+			{/if}
 		</div>
 	</SideBar>
 </main>

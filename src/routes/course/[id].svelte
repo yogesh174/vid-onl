@@ -46,8 +46,10 @@
 	updatePreview();
 
 	const changeMode = () => {
+		isLoading = true;
 		updatePreview();
 		edit = !edit;
+		isLoading = false;
 	};
 
 	const saveContent = async () => {
